@@ -1,7 +1,24 @@
-local Player = game.Players.LocalPlayer
-local Character = Player.Character
-local Humanoid = Character.Humanoid
- 
+-- Z to Toggle
+local player = game:GetService("Players").LocalPlayer
+local UIS = game:GetService("UserInputService")
+local myzaza = false
+UIS.InputBegan:Connect(function(input, GPE)
+if GPE then retur
+
+end
+if input.KeyCode == Enum.KeyCode.Z then
+myzaza = not myzaza
+end
+end)
+while task.wait() do
+local parts = workspace:GetPartBoundsInRadius(player.Character:WaitForChild("HumanoidRootPart").Position,
+
+10)
+for _, part in ipairs(parts) do
+part.CanTouch = myzaza
+end
+end
+
 print('Godmode working by khiar_script for 🇮🇩.')
 
 game:GetService("StarterGui"):SetCore("SendNotification", { 
@@ -9,13 +26,3 @@ game:GetService("StarterGui"):SetCore("SendNotification", {
     Text = "By khiar_script";
     Icon = "rbxthumb://type=Asset&id=5107182114&w=150&h=150"})
 Duration = 10;
-
-Humanoid.MaxHealth = 999999
-Humanoid.Health = Humanoid.MaxHealth / 2
-
-Humanoid.HealthChanged:connect(function()
-    if Humanoid.Health < 10 then
-        Humanoid.Health = Humanoid.MaxHealth
-    end
-end)
--- Try it on Trigon or Skisploit or Rosploit.
