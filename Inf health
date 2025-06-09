@@ -1,0 +1,15 @@
+local Player = game.Players.LocalPlayer
+local Character = Player.Character
+local Humanoid = Character.Humanoid
+ 
+print('Godmode working by khiar_script for 🇮🇩.')
+ 
+Humanoid.MaxHealth = 999999
+Humanoid.Health = Humanoid.MaxHealth / 2
+ 
+Humanoid.HealthChanged:connect(function()
+    if Humanoid.Health < 10 then
+        Humanoid.Health = Humanoid.MaxHealth
+    end
+end)
+-- Try it on Trigon or Skisploit or Rosploit.
