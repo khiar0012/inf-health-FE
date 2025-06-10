@@ -1,5 +1,5 @@
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Turtle-Brand/Turtle-Lib/main/source.lua"))()
-local w = lib:Window("S.E.W.H")
+local w = lib:Window("INF HEALTH By khiar_script🇮🇩")
 getgenv().settings = { inf_health = false, ragdoll = false }
 local function getDisaster()
     return game:GetService("Workspace"):GetAttribute("currentDisaster") or "None"
@@ -14,7 +14,7 @@ game:GetService("Workspace"):GetAttributeChangedSignal("currentDisaster"):Connec
     if window then
         for _, d in pairs(window:GetChildren()) do
             if d:IsA("TextLabel") and string.find(d.Text, "Current Disaster") then
-                d.Text = "Current Disaster: " .. getDisaster()
+                d.Text = "gak ada🇮🇩: " .. getDisaster()
             end
         end
     end
@@ -23,7 +23,7 @@ game:GetService("Workspace"):GetAttributeChangedSignal("currentMap"):Connect(fun
     if window then
         for _, d in pairs(window:GetChildren()) do
             if d:IsA("TextLabel") and string.find(d.Text, "Current Map") then
-                d.Text = "Current Map: " .. getMap()
+                d.Text = "gak ada🇮🇩: " .. getMap()
             end
         end
     end
