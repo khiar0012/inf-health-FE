@@ -1,28 +1,58 @@
--- Z to Toggle
-local player = game:GetService("Players").LocalPlayer
-local UIS = game:GetService("UserInputService")
-local myzaza = false
-UIS.InputBegan:Connect(function(input, GPE)
-if GPE then retur
-
+local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Turtle-Brand/Turtle-Lib/main/source.lua"))()
+local w = lib:Window("S.E.W.H")
+getgenv().settings = { inf_health = false, ragdoll = false }
+local function getDisaster()
+    return game:GetService("Workspace"):GetAttribute("currentDisaster") or "None"
 end
-if input.KeyCode == Enum.KeyCode.Z then
-myzaza = not myzaza
+local function getMap()
+    return game:GetService("Workspace"):GetAttribute("currentMap") or "Unknown"
 end
+w:Label("Current Disaster: " .. getDisaster(), Color3.new(1.000000, 0.282353, 0.282353))
+w:Label("Current Map: " .. getMap(), Color3.new(0.372549, 0.635294, 1.000000))
+local window = game:GetService("CoreGui"):FindFirstChild("TurtleUiLib"):FindFirstChild("UiWindow"):FindFirstChild("Header"):WaitForChild("Window")
+game:GetService("Workspace"):GetAttributeChangedSignal("currentDisaster"):Connect(function()
+    if window then
+        for _, d in pairs(window:GetChildren()) do
+            if d:IsA("TextLabel") and string.find(d.Text, "Current Disaster") then
+                d.Text = "Current Disaster: " .. getDisaster()
+            end
+        end
+    end
 end)
-while task.wait() do
-local parts = workspace:GetPartBoundsInRadius(player.Character:WaitForChild("HumanoidRootPart").Position,
-
-10)
-for _, part in ipairs(parts) do
-part.CanTouch = myzaza
-end
-end
-
-print('Godmode working by khiar_script for 🇮🇩.')
-
-game:GetService("StarterGui"):SetCore("SendNotification", { 
-    Title = "BY khiar_script";
-    Text = "By khiar_script";
-    Icon = "rbxthumb://type=Asset&id=5107182114&w=150&h=150"})
-Duration = 10;
+game:GetService("Workspace"):GetAttributeChangedSignal("currentMap"):Connect(function()
+    if window then
+        for _, d in pairs(window:GetChildren()) do
+            if d:IsA("TextLabel") and string.find(d.Text, "Current Map") then
+                d.Text = "Current Map: " .. getMap()
+            end
+        end
+    end
+end)
+w:Toggle("Inf Health", settings.inf_health, function(bool)
+    settings.inf_health = bool
+    if settings.inf_health then
+        while settings.inf_health do
+            if getDisaster() ~= "None" then
+                game:GetService("ReplicatedStorage"):WaitForChild("Resources"):WaitForChild("Communication"):WaitForChild("Asynchronous"):FireServer("charHit", -9e9, false, "Left Leg")
+            end
+            task.wait(0.5)
+        end
+    end
+end)
+w:Toggle("Ragdoll", settings.ragdoll, function(bool)
+    settings.ragdoll = bool
+    game:GetService("ReplicatedStorage"):WaitForChild("Resources"):WaitForChild("Communication"):WaitForChild("Asynchronous"):FireServer("updateRagdoll", settings.ragdoll)
+end)
+w:Button("Anti AFK", function ()
+    local bb = game:GetService("VirtualUser")
+    game:GetService("Players").LocalPlayer.Idled:connect(function()
+        bb:CaptureController()
+        bb:ClickButton2(Vector2.new())
+    end)
+end)
+w:Label("By: khiar_script🇮🇩", Color3.fromRGB(127, 143, 166))
+w:Button("Destroy Gui", function ()
+    settings.inf_health = false
+    settings.ragdoll = false
+    lib:Destroy()
+end)
